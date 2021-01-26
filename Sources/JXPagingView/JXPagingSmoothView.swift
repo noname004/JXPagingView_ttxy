@@ -62,8 +62,6 @@ open class JXPagingSmoothView: UIView {
     let cellIdentifier = "cell"
     var currentListInitializeContentOffsetY: CGFloat = 0
     var singleScrollView: UIScrollView?
-    /// 顶部固定sectionHeader的垂直偏移量。数值越大越往下沉。
-    var pinSectionHeaderVerticalOffset: CGFloat = 0
 
     deinit {
         listDict.values.forEach {
