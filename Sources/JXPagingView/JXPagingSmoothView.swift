@@ -60,6 +60,8 @@ open class JXPagingSmoothView: UIView {
     let cellIdentifier = "cell"
     var currentListInitializeContentOffsetY: CGFloat = 0
     var singleScrollView: UIScrollView?
+    /// 顶部固定sectionHeader的垂直偏移量。数值越大越往下沉。
+    var pinSectionHeaderVerticalOffset: Int = 0
 
     deinit {
         listDict.values.forEach {
@@ -162,7 +164,7 @@ open class JXPagingSmoothView: UIView {
         }
         currentListScrollView = scrollView
         let contentOffsetY = scrollView.contentOffset.y + heightForPagingHeaderContainerView
-        if contentOffsetY < heightForPagingHeader {
+        if contentOffsetY + pinSectionHeaderVerticalOffset < heightForPagingHeader {
             isSyncListContentOffsetEnabled = true
             currentPagingHeaderContainerViewY = -contentOffsetY
             for list in listDict.values {
@@ -177,15 +179,15 @@ open class JXPagingSmoothView: UIView {
             }
         }else {
             if pagingHeaderContainerView.superview != self {
-                pagingHeaderContainerView.frame.origin.y = -heightForPagingHeader
+                pagingHeaderContainerView.frame.origin.y = -heightForPagingHeader + pinSectionHeaderVerticalOffset
                 addSubview(pagingHeaderContainerView)
             }
             if isSyncListContentOffsetEnabled {
                 isSyncListContentOffsetEnabled = false
-                currentPagingHeaderContainerViewY = -heightForPagingHeader
+                currentPagingHeaderContainerViewY = -heightForPagingHeader + pinSectionHeaderVerticalOffset
                 for list in listDict.values {
                     if list.listScrollView() != currentListScrollView {
-                        list.listScrollView().setContentOffset(CGPoint(x: 0, y: -heightForPinHeader), animated: false)
+                        list.listScrollView().setContentOffset(CGPoint(x: 0, y: -heightForPinHeader - pinSectionHeaderVerticalOffset), animated: false)
                     }
                 }
             }
@@ -259,7 +261,7 @@ open class JXPagingSmoothView: UIView {
             return
         }
         listDict.values.forEach { $0.listScrollView().scrollsToTop = ($0.listScrollView() === listScrollView) }
-        if listScrollView.contentOffset.y <= -heightForPinHeader {
+        if listScrollView.contentOffset.y <= -(heightForPinHeader + pinSectionHeaderVerticalOffset) {
             pagingHeaderContainerView.frame.origin.y = 0
             listHeader.addSubview(pagingHeaderContainerView)
         }
