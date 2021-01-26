@@ -46,6 +46,8 @@ open class JXPagingSmoothView: UIView {
     public let listCollectionView: JXPagingSmoothCollectionView
     public var defaultSelectedIndex: Int = 0
     public weak var delegate: JXPagingSmoothViewDelegate?
+    /// 顶部固定sectionHeader的垂直偏移量。数值越大越往下沉。
+    public var pinSectionHeaderVerticalOffset: CGFloat = 0
 
     weak var dataSource: JXPagingSmoothViewDataSource?
     var listHeaderDict = [Int : UIView]()
