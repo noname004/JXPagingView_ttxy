@@ -326,18 +326,24 @@ extension JXPagingSmoothView: UICollectionViewDataSource, UICollectionViewDelega
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.pagingSmoothViewDidScroll?(scrollView)
-        let indexPercent = scrollView.contentOffset.x/scrollView.bounds.size.width
+    //    let indexPercent = scrollView.contentOffset.x/scrollView.bounds.size.width
         let index = Int(scrollView.contentOffset.x/scrollView.bounds.size.width)
-        let listScrollView = listDict[index]?.listScrollView()
-        if (indexPercent - CGFloat(index) == 0) && index != currentIndex && !(scrollView.isDragging || scrollView.isDecelerating) && listScrollView?.contentOffset.y ?? 0 <= -heightForPinHeader {
-            horizontalScrollDidEnd(at: index)
-        }else {
+     //   let listScrollView = listDict[index]?.listScrollView()
+//
+//        if (indexPercent - CGFloat(index) == 0) &&
+//            index != currentIndex &&
+//            !(scrollView.isDragging || scrollView.isDecelerating) &&
+//            listScrollView?.contentOffset.y ?? 0 <= -heightForPinHeader
+//        {
+//
+//            horizontalScrollDidEnd(at: index)
+//        }else {
             //左右滚动的时候，就把listHeaderContainerView添加到self，达到悬浮在顶部的效果
             if pagingHeaderContainerView.superview != self {
                 pagingHeaderContainerView.frame.origin.y = currentPagingHeaderContainerViewY
                 addSubview(pagingHeaderContainerView)
             }
-        }
+//        }
         if index != currentIndex {
             currentIndex = index
         }
@@ -354,6 +360,11 @@ extension JXPagingSmoothView: UICollectionViewDataSource, UICollectionViewDelega
         let index = Int(scrollView.contentOffset.x/scrollView.bounds.size.width)
         horizontalScrollDidEnd(at: index)
     }
+    
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        let index = Int(scrollView.contentOffset.x/scrollView.bounds.size.width)
+        horizontalScrollDidEnd(at: index)
+    }
 }
 
 public class JXPagingSmoothCollectionView: UICollectionView, UIGestureRecognizerDelegate {
@@ -366,3 +377,4 @@ public class JXPagingSmoothCollectionView: UICollectionView, UIGestureRecognizer
         return true
     }
 }
+
