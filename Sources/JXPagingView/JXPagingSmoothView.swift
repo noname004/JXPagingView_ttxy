@@ -134,6 +134,9 @@ open class JXPagingSmoothView: UIView {
         if dataSource.numberOfLists(in: self) == 0 {
             singleScrollView = UIScrollView()
             addSubview(singleScrollView!)
+            if #available(iOS 11.0, *) {
+                singleScrollView!.contentInsetAdjustmentBehavior = .never
+            }
             singleScrollView?.addSubview(pagingHeader)
             singleScrollView?.contentSize = CGSize(width: bounds.size.width, height: heightForPagingHeader)
         }else if singleScrollView != nil {
