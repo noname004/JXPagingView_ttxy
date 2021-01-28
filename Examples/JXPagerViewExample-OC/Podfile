@@ -1,8 +1,0 @@
-platform :ios, '8.0'
-
-target 'JXPagerViewExample-OC' do
-pod 'JXPagingView/Pager', :path => '../../../JXPagingView'
-pod 'JXCategoryView'
-pod 'MJRefresh', '3.4.0'
-pod 'FDFullscreenPopGesture', '1.1'
-end

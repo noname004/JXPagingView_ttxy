@@ -1,1 +1,0 @@
-../../../../../../Sources/JXPagerView/JXPagerSmoothView.h
